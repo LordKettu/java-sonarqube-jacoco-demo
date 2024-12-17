@@ -24,7 +24,7 @@ public class CalculatorTest {
     // Test pour la multiplication
     @Test
     public void testMultiply() {
-        assertEquals(6.0, calculator.multiply(2.0, 3.0), 0.0);
+        assertEquals(5.0, calculator.multiply(2.0, 3.0), 0.0);
         assertEquals(-6.0, calculator.multiply(-2.0, 3.0), 0.0);
     }
 
