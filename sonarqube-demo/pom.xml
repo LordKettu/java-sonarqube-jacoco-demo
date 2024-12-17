@@ -9,10 +9,73 @@
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13.2</version> <!-- Utilisez la dernière version stable de JUnit 4 -->
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.jacoco</groupId>
+        <artifactId>org.jacoco.agent</artifactId>
+        <version>0.8.10</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+    	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M5</version>
+            <configuration>
+                <dependenciesToScan>
+                    <dependency>org.junit.jupiter</dependency>
+                </dependenciesToScan>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.10</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                    <configuration>
+                        <destFile>${project.build.directory}/jacoco-ut.exec</destFile>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>report-aggregate</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>report-aggregate</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/jacoco-report</outputDirectory>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+    		<groupId>org.sonarsource.scanner.maven</groupId>
+    		<artifactId>sonar-maven-plugin</artifactId>
+    		<version>3.9.1.2184</version>
+		</plugin>
+    </plugins>
+</build>
+<properties>
+    <sonar.projectKey>Java-SonarQube-JaCoCo-Demo</sonar.projectKey>
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.login>sqp_0b5fa6895ed6b52c20243a1fabd703c3c8a2ab47</sonar.login>
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+</properties>
 </project>
